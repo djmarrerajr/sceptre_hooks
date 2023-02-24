@@ -3,7 +3,7 @@ from sceptre.hooks import Hook
 from utilities.aws_client import get_client
 
 
-class EmptyBucket(Hook):
+class ReplaceValues(Hook):
     """
         Arguments (passed in as a dict):
             NONE
@@ -15,7 +15,7 @@ class EmptyBucket(Hook):
     """
 
     def __init__(self, *args, **kwargs):
-        super(EmptyBucket, self).__init__(*args, **kwargs)
+        super(ReplaceValues, self).__init__(*args, **kwargs)
 
     def run(self):
         cloudfm = get_client(self.stack, 'cloudformation')
@@ -42,5 +42,5 @@ class EmptyBucket(Hook):
 
 
 if __name__ == '__main__':
-    h = EmptyBucket()
+    h = ReplaceValues()
     h.run()

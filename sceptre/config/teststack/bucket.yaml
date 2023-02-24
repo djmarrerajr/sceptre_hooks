@@ -12,5 +12,5 @@ hooks:
         - !print_outputs
   {% endfor %}
 
-#    before_delete:
-#        - !empty_bucket "BucketName"
+    before_delete:
+        - !empty_bucket "BucketName"
