@@ -1,0 +1,5 @@
+-e .
+
+boto3~=1.26.78
+sceptre~=4.0.2
+setuptools~=65.5.1

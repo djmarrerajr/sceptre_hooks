@@ -1,0 +1,3 @@
+project_code: sceptrehooks-{{ var.environment }}
+profile: {{ var.profile | default('null') }}
+region: {{ var.region | default('us-east-2') }}
