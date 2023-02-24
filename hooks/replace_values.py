@@ -10,8 +10,8 @@ class ReplaceValues(Hook):
 
         Example Usage:
             hooks:
-                before_delete:
-                    - !empty_bucket
+                after_create:
+                    - !replace_values
     """
 
     def __init__(self, *args, **kwargs):

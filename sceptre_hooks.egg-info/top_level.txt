@@ -1,4 +1,1 @@
-empty_bucket
 hooks
-print_outputs
-replace_values
