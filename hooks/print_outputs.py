@@ -20,6 +20,10 @@ class PrintStackOutputs(Hook):
     def run(self):
         cloudfm = get_client(self.stack, 'cloudformation')
 
+        self.logger.info(
+            f"Executing {__name__}"
+        )
+
         try:
             response = cloudfm.describe_stacks(StackName=self.stack.external_name)
             outputs = response['Stacks'][0]['Outputs']
