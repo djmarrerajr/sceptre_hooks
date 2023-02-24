@@ -1,2 +1,3 @@
 [sceptre.hooks]
+empty_bucket = hooks.empty_bucket:EmptyBucket
 print_outputs = hooks.print_outputs:PrintStackOutputs
