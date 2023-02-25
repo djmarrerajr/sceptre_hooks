@@ -13,7 +13,6 @@ setup(
     ],
     install_requires=[
         'boto3',
-        'sceptre',
         'setuptools',
     ],
     entry_points={
