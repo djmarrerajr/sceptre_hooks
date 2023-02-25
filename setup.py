@@ -11,7 +11,7 @@ setup(
         'hooks.empty_bucket',
         'hooks.replace_values',
     ],
-    requires=[
+    install_requires=[
         'boto3',
         'sceptre',
         'setuptools',
