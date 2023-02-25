@@ -9,7 +9,7 @@ setup(
     py_modules=[
         'hooks.print_outputs',
         'hooks.empty_bucket',
-        'hook.sreplace_values',
+        'hooks.replace_values',
     ],
     requires=[
         'boto3',
