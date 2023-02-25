@@ -15,12 +15,28 @@ def get_client(sceptre_context: Stack, service: str) -> support.client:
         logging.critical(f"FATAL ERROR: {e}")
 
 
-class AwsClient:
-    """
-        AwsClient is a utility class that can be used bye custom Sceptre hooks
-        as an abstraction layer around boto3 to provide profile/region sensitive
-        clients.
-    """
+def get_resource(sceptre_context: Stack, service: str) -> support.client:
+    try:
+        session = Session(profile_name=sceptre_context.profile)
+        resource = session.resource(service, region_name=sceptre_context.region)
 
-    def __init__(self, *args, **kwargs):
-        super(AwsClient, self).__init__(*args, **kwargs)
+        return resource
+    except Exception as e:
+        logging.critical(f"FATAL ERROR: {e}")
+
+
+def get_stack_output(sceptre_context: Stack, stack_name: str = '') -> dict:
+    cloudfm = get_client(sceptre_context, 'cloudformation')
+
+    try:
+        if not stack_name:
+            stack_name = sceptre_context.external_name
+
+        response = cloudfm.describe_stacks(StackName=stack_name)
+        return response['Stacks'][0]['Outputs']
+    except Exception as e:
+        sceptre_context.logger.exception(
+            f"UNEXPECTED ERROR: While trying to retrieve output for stack {stack_name}", exc_info=e
+        )
+
+    return None

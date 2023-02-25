@@ -1,6 +1,7 @@
+from botocore.exceptions import ClientError
 from sceptre.hooks import Hook
 
-from utilities.aws_client import get_client
+from utilities.aws_client import get_stack_output
 
 
 class PrintStackOutputs(Hook):
@@ -18,15 +19,12 @@ class PrintStackOutputs(Hook):
         super(PrintStackOutputs, self).__init__(*args, **kwargs)
 
     def run(self):
-        cloudfm = get_client(self.stack, 'cloudformation')
-
-        self.logger.info(
-            f"Executing {__name__}"
-        )
-
         try:
-            response = cloudfm.describe_stacks(StackName=self.stack.external_name)
-            outputs = response['Stacks'][0]['Outputs']
+            outputs = get_stack_output(self.stack)
+
+            self.logger.info(f"{(len(self.stack.external_name)+13)*'-'}")
+            self.logger.info(f"Outputs for: {self.stack.external_name}")
+            self.logger.info(f"{(len(self.stack.external_name)+13)*'-'}")
 
             for item in outputs:
                 key = item['OutputKey']
@@ -35,9 +33,13 @@ class PrintStackOutputs(Hook):
                 self.logger.info(
                     f"{key}: {val}"
                 )
+        except ClientError as e:
+            self.logger.exception(
+                f"ERROR: While trying to retrieve output for stack {self.stack.external_name}", exc_info=e
+            )
         except Exception as e:
-            self.logger.fatal(
-                f"FATAL ERROR: {e}"
+            self.logger.exception(
+                f"UNEXPECTED ERROR: While trying to retrieve output for stack {self.stack.external_name}", exc_info=e
             )
 
 
