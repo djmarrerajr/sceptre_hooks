@@ -1,4 +1,5 @@
 from os import path, walk
+from mimetypes import guess_type
 from pathlib import Path
 from shutil import rmtree, copytree
 
@@ -12,6 +13,8 @@ class ReplaceValues(Hook):
         This hook will recursively process each of the files located within the
         path specified by 'source_dir' and replace each of the 'values_to_replace'
         with a new value writing to output to 'target_dir'
+
+        Only files whose mimetype begins with 'text' will be processed.
 
         Arguments (passed in as a dict):
             NONE
@@ -63,7 +66,9 @@ class ReplaceValues(Hook):
                 relative_path = path.join(current_dir, filename)
                 absolute_path = path.abspath(relative_path)
 
-                source_files.add(absolute_path)
+                content_type, encoding = guess_type(absolute_path)
+                if content_type.startswith('text'):
+                    source_files.add(absolute_path)
 
         for file in source_files:
             try:
