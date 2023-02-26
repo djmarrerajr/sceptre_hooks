@@ -6,6 +6,8 @@ from utilities.aws_client import get_stack_output
 
 class PrintStackOutputs(Hook):
     """
+        This hook will write the keys/values of all the outputs for the current stack.
+
         Arguments (passed in as a dict):
             NONE
 
