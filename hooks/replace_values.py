@@ -52,7 +52,7 @@ class ReplaceValues(Hook):
         return None
 
     def _replace_values(self, source_dir, target_dir, replacements):
-        self.logger.info(f"Performing necessary replacements in {source_dir}")
+        self.logger.info(f"Performing necessary replacements in {path.normpath(source_dir)}")
 
         if path.exists(target_dir):
             rmtree(target_dir, ignore_errors=True)

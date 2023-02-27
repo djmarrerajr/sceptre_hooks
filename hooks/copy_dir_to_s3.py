@@ -38,7 +38,7 @@ class CopyDirToS3(Hook):
         bucket_name = self._get_output_value(bucket_name)
 
         try:
-            self.logger.info(f"Copying contents of {source_dir} to {bucket_name}")
+            self.logger.info(f"Copying contents of {path.normpath(source_dir)} to {bucket_name}")
 
             for current_dir, subdirs, files in walk(source_dir):
                 for filename in files:
